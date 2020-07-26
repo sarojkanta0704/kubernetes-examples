@@ -407,8 +407,6 @@ spec:
             requests:
               cpu: 100m
               memory: 90Mi
-      nodeSelector:
-        ingress-ready: 'true'
       tolerations:
         - effect: NoSchedule
           key: isIngress
