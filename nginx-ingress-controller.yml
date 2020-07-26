@@ -412,7 +412,7 @@ spec:
       tolerations:
         - effect: NoSchedule
           key: isIngress
-          value: true
+          value: 'true'
           operator: Equal
       serviceAccountName: ingress-nginx
       terminationGracePeriodSeconds: 0
