@@ -1,15 +1,15 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: www.sb-demo.com
+  name: www-ing
   annotations:
     kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
-  - host: www.sb-demo.com
+  - host: www.amoylabs.com
     http:
       paths:
       - path: /
         backend:
-          serviceName: sb-demo-service
+          serviceName: www-svc
           servicePort: 8080
