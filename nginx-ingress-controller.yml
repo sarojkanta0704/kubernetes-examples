@@ -412,6 +412,8 @@ spec:
           key: isIngress
           value: 'true'
           operator: Equal
+      nodeSelector:
+        isIngress: 'true'
       serviceAccountName: ingress-nginx
       terminationGracePeriodSeconds: 0
       volumes:
@@ -546,6 +548,13 @@ spec:
             - --namespace=ingress-nginx
             - --secret-name=ingress-nginx-admission
       restartPolicy: OnFailure
+      tolerations:
+        - effect: NoSchedule
+          key: isIngress
+          value: 'true'
+          operator: Equal
+      nodeSelector:
+        isIngress: 'true'
       serviceAccountName: ingress-nginx-admission
       securityContext:
         runAsNonRoot: true
@@ -591,6 +600,13 @@ spec:
             - --secret-name=ingress-nginx-admission
             - --patch-failure-policy=Fail
       restartPolicy: OnFailure
+      tolerations:
+        - effect: NoSchedule
+          key: isIngress
+          value: 'true'
+          operator: Equal
+      nodeSelector:
+        isIngress: 'true'
       serviceAccountName: ingress-nginx-admission
       securityContext:
         runAsNonRoot: true
