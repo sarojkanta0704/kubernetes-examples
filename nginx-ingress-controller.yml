@@ -409,11 +409,11 @@ spec:
               memory: 90Mi
       tolerations:
         - effect: NoSchedule
-          key: isIngress
-          value: 'true'
+          key: node-role.kubernetes.io/ingress
+          value: ''
           operator: Equal
       nodeSelector:
-        isIngress: 'true'
+        node-role.kubernetes.io/ingress: ''
       serviceAccountName: ingress-nginx
       terminationGracePeriodSeconds: 0
       volumes:
@@ -550,11 +550,11 @@ spec:
       restartPolicy: OnFailure
       tolerations:
         - effect: NoSchedule
-          key: isIngress
-          value: 'true'
+          key: node-role.kubernetes.io/ingress
+          value: ''
           operator: Equal
       nodeSelector:
-        isIngress: 'true'
+        node-role.kubernetes.io/ingress: ''
       serviceAccountName: ingress-nginx-admission
       securityContext:
         runAsNonRoot: true
@@ -602,11 +602,11 @@ spec:
       restartPolicy: OnFailure
       tolerations:
         - effect: NoSchedule
-          key: isIngress
-          value: 'true'
+          key: node-role.kubernetes.io/ingress
+          value: ''
           operator: Equal
       nodeSelector:
-        isIngress: 'true'
+        node-role.kubernetes.io/ingress: ''
       serviceAccountName: ingress-nginx-admission
       securityContext:
         runAsNonRoot: true
