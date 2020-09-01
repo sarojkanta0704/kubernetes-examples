@@ -351,7 +351,7 @@ spec:
             - --publish-status-address=localhost
             - --http-port=8080
             - --https-port=8443
-            - --default-ssl-certificate=default/ingress-nginx-default-tls-secret
+            - --default-ssl-certificate=ingress-nginx/ingress-nginx-default-tls
           securityContext:
             capabilities:
               drop:
