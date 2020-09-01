@@ -287,11 +287,11 @@ spec:
   type: NodePort
   ports:
     - name: http
-      port: 1080
+      port: 8080
       protocol: TCP
       targetPort: http
     - name: https
-      port: 1443
+      port: 8443
       protocol: TCP
       targetPort: https
   selector:
@@ -346,12 +346,12 @@ spec:
             - --election-id=ingress-controller-leader
             - --ingress-class=nginx
             - --configmap=ingress-nginx/ingress-nginx-controller
-            - --validating-webhook=:8443
+            - --validating-webhook=:9443
             - --validating-webhook-certificate=/usr/local/certificates/cert
             - --validating-webhook-key=/usr/local/certificates/key
             - --publish-status-address=localhost
-            - --http-port=1080
-            - --https-port=1443
+            - --http-port=8080
+            - --https-port=8443
           securityContext:
             capabilities:
               drop:
@@ -391,15 +391,15 @@ spec:
             failureThreshold: 3
           ports:
             - name: http
-              containerPort: 1080
+              containerPort: 8080
               protocol: TCP
-              hostPort: 1080
+              hostPort: 8080
             - name: https
-              containerPort: 1443
-              protocol: TCP
-              hostPort: 1443
-            - name: webhook
               containerPort: 8443
+              protocol: TCP
+              hostPort: 8443
+            - name: webhook
+              containerPort: 9443
               protocol: TCP
           volumeMounts:
             - name: webhook-cert
