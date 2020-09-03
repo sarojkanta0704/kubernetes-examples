@@ -27,7 +27,7 @@ spec:
               mountPath: /persistentvolumes
           env:
             - name: PROVISIONER_NAME
-              value: nfs-client
+              value: omv.amoylabs.com/nfsdata-k8s
             - name: NFS_SERVER
               value: omv.amoylabs.com
             - name: NFS_PATH
