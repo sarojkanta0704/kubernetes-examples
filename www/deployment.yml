@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
       - name: www-springboot
-        image: registry.cn-hangzhou.aliyuncs.com/guuuuo/springboot-demo:0.3	
+        image: registry.cn-hangzhou.aliyuncs.com/guuuuo/springboot-demo:0.12	
         ports:
-        - containerPort: 8080
+        - containerPort: 9080
         env:
         - name: MY_NODE_NAME
           valueFrom:
