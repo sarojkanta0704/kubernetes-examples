@@ -16,15 +16,6 @@ spec:
       labels:
         app: grafana
     spec:
-      initContainers:
-        - name: grafana-chown
-          command: ["chown", "-R", "472:472", "/var/lib/grafana"]
-          image: busybox
-          imagePullPolicy: IfNotPresent
-          volumeMounts:
-          - name: storage
-            subPath: grafana
-            mountPath: /var/lib/grafana      
       containers:
       - name: grafana
         image: grafana/grafana:5.4.3
@@ -59,18 +50,18 @@ spec:
         resources:
           limits:
             cpu: 100m
-            memory: 256Mi
+            memory: 2048Mi
           requests:
             cpu: 100m
-            memory: 256Mi
+            memory: 2048Mi
         volumeMounts:
         - mountPath: /var/lib/grafana
-          subPath: grafana
           name: storage
+          subPath: grafana
       securityContext:
         fsGroup: 472
         runAsUser: 472
       volumes:
       - name: storage
         persistentVolumeClaim:
-          claimName: grafana-pv-claim
+          claimName: grafana
