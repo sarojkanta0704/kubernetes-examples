@@ -9,7 +9,8 @@ resources:
 - service-account.yaml
 - role-binding.yaml
 - pvc.yaml
-- deployment.yaml
+- deployment.node-exporter.yaml
+- deployment.prometheus-server.yaml
 - service.yaml
 - ingress.yaml
 images:
