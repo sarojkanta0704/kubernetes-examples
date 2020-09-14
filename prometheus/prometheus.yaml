@@ -30,12 +30,19 @@ scrape_configs:
           group: 'prometheus'
 
   - job_name: 'k8s'
-    # Override the global default and scrape targets from this job every 5 seconds.
-    scrape_interval: 5s
     static_configs:
       - targets: ['192.168.2.120:9100', '192.168.2.130:9100', '192.168.2.131:9100', '192.168.2.132:9100', '192.168.2.133:9100', '192.168.2.134:9100']
         labels:
           group: 'k8s'
+
+  - job_name: 'grafana'
+    scheme: 'https'
+    tls_config:
+      insecure_skip_verify: true
+    static_configs:
+      - targets: ['grafana.amoylabs.com:8443']
+        labels:
+          group: 'grafana'
 
   - job_name: 'ingress-nginx-endpoints'
     kubernetes_sd_configs:
