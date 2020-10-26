@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: www-springboot
-        image: xmniko/springboot-demo
+        image: xmniko/springboot-demo:release-v0.15
         imagePullPolicy: Always
         ports:
         - containerPort: 9080
