@@ -70,3 +70,13 @@ scrape_configs:
     - source_labels: [__meta_kubernetes_service_name]
       regex: prometheus-server
       action: drop
+
+  - job_name: 'www.amoylabs.com'
+    scheme: 'https'
+    metrics_path: /actuator/prometheus
+    tls_config:
+      insecure_skip_verify: true
+    static_configs:
+      - targets: ['www.amoylabs.com:8443']
+        labels:
+          group: 'spring-boot'
