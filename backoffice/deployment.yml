@@ -14,22 +14,12 @@ spec:
     spec:
       containers:
       - name: backoffice-springboot
-        image: xmniko/backoffice:0.0.1
+        image: xmniko/backoffice:0.0.2
         imagePullPolicy: Always
         ports:
         - containerPort: 9080
         env:
         - name: ACTIVE_PROFILE
           value: qa 
-        - name: MY_NODE_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.nodeName
-        - name: MY_POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: MY_POD_IP
-          valueFrom:
-            fieldRef:
-              fieldPath: status.podIP
+        command: ["java"]
+        args: ["-jar", "/usr/app/app.jar", "-Dspring.profiles.active=$ACTIVE_PROFILE"]
