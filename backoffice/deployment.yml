@@ -14,11 +14,13 @@ spec:
     spec:
       containers:
       - name: backoffice-springboot
-        image: amoylabs/backoffice:release-v0.0.1
+        image: xmniko/backoffice:0.0.1
         imagePullPolicy: Always
         ports:
         - containerPort: 9080
         env:
+        - name: ACTIVE_PROFILE
+          value: qa 
         - name: MY_NODE_NAME
           valueFrom:
             fieldRef:
