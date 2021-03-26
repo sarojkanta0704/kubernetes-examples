@@ -346,6 +346,8 @@ spec:
             - --election-id=ingress-controller-leader
             - --ingress-class=nginx
             - --configmap=ingress-nginx/ingress-nginx-controller
+            - --tcp-services-configmap=ingress-nginx/tcp-services
+            - --udp-services-configmap=ingress-nginx/udp-services
             - --validating-webhook=:9443
             - --validating-webhook-certificate=/usr/local/certificates/cert
             - --validating-webhook-key=/usr/local/certificates/key
