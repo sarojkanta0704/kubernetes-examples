@@ -2,6 +2,7 @@ apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
   name: backoffice-dep 
+  namespace: backoffice
 spec:
   selector:
     matchLabels:
@@ -14,17 +15,9 @@ spec:
     spec:
       containers:
       - name: backoffice-springboot
-        image: xmniko/backoffice:0.0.3
+        image: xmniko/backoffice:0.0.4
         imagePullPolicy: Always
-        env:
-        - name: DB_HOST
-          value: backoffice-mysql
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: backoffice-mysql-pass
-              key: password        
         ports:
-        - containerPort: 9080
+        - containerPort: 8080
         command: ["java"]
         args: ["-jar", "/opt/app/app.jar", "-Dspring.profiles.active=qa"]
