@@ -1,20 +1,21 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  namespace: mysql
-  name: mysql-ing
-  labels:
-    app: mysql
   annotations:
     kubernetes.io/ingress.class: nginx
     ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/server-alias: mysql.amoylabs.com
+  labels:
+    app: mysql
+  name: mysql-ing
+  namespace: mysql
+
 spec:
   rules:
   - host: mysql.amoylabs.com
     http:
       paths:
-      - path: /      
-        backend:
+      - backend:
           serviceName: mysql-svc
           servicePort: 3306
+        path: /
