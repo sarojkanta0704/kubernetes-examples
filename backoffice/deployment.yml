@@ -18,8 +18,5 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 9080
-        env:
-        - name: ACTIVE_PROFILE
-          value: qa 
         command: ["java"]
-        args: ["-jar", "/usr/app/app.jar", "-Dspring.profiles.active=$ACTIVE_PROFILE"]
+        args: ["-jar", "/opt/app/app.jar", "-Dspring.profiles.active=qa"]
