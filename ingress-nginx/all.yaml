@@ -353,9 +353,7 @@ spec:
             - --publish-status-address=localhost
             - --http-port=8080
             - --https-port=8443
-            - --default-ssl-certificate=ingress-nginx/ingress-nginx-default-tls
-            - --tcp-services-configmap=$(POD_NAMESPACE)/tcp-services
-            - --udp-services-configmap=$(POD_NAMESPACE)/udp-services            
+            - --default-ssl-certificate=ingress-nginx/ingress-nginx-default-tls        
           securityContext:
             capabilities:
               drop:
