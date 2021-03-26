@@ -7,6 +7,7 @@ spec:
   ports:
   - port: 8080
     protocol: TCP
+    name: http
     targetPort: 8080
   selector:
     app: backoffice-app

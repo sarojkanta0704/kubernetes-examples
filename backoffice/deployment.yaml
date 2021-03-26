@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: backoffice-springboot
-        image: xmniko/backoffice:0.0.4
+        image: xmniko/backoffice:0.0.6
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
