@@ -1,0 +1,4 @@
+resources:
+  - default-tls.secret.yaml
+  - tcp-services.yaml
+  - all.yaml
