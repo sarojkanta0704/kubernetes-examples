@@ -354,7 +354,6 @@ spec:
             - --http-port=8080
             - --https-port=8443
             - --default-ssl-certificate=ingress-nginx/ingress-nginx-default-tls
-            - --default-backend-service=$(POD_NAMESPACE)/nginx-errors
           securityContext:
             capabilities:
               drop:
