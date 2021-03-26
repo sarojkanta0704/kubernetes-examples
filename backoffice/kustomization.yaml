@@ -1,0 +1,7 @@
+secretGenerator:
+- name: backoffice-mysql-pass
+  literals:
+  - password=root
+resources:
+  - mysql-deployment.yaml
+  - backoffice-deployment.yaml

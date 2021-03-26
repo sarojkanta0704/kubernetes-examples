@@ -1,0 +1,30 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: backoffice-dep 
+spec:
+  selector:
+    matchLabels:
+      app: backoffice-app
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: backoffice-app
+    spec:
+      containers:
+      - name: backoffice-springboot
+        image: xmniko/backoffice:0.0.2
+        imagePullPolicy: Always
+        env:
+        - name: DB_HOST
+          value: backoffice-mysql
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: backoffice-mysql-pass
+              key: password        
+        ports:
+        - containerPort: 9080
+        command: ["java"]
+        args: ["-jar", "/opt/app/app.jar", "-Dspring.profiles.active=qa"]
