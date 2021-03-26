@@ -57,7 +57,7 @@ spec:
               key: password
         ports:
         - containerPort: 3306
-          name: backoffice-mysql
+          name: mysql
         volumeMounts:
         - name: backoffice-mysql-persistent-storage
           mountPath: /var/lib/mysql
