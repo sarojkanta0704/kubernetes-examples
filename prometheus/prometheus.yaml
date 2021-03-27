@@ -80,3 +80,13 @@ scrape_configs:
       - targets: ['www.amoylabs.com:8443']
         labels:
           group: 'spring-boot'
+
+  - job_name: 'backoffice.amoylabs.com'
+    scheme: 'https'
+    metrics_path: /actuator/prometheus
+    tls_config:
+      insecure_skip_verify: true
+    static_configs:
+      - targets: ['backoffice.amoylabs.com:8443']
+        labels:
+          group: 'spring-boot'
