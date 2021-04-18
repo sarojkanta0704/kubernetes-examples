@@ -47,7 +47,7 @@ spec:
               mountPath: /etc/mysql/conf.d 
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: root
+              value: DdK2YeTWmdAoLlrq8CKV
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
