@@ -1,3 +1,5 @@
 resources:
   - default-tls.secret.yaml
+  - tcp-services-config-map.yaml
+  - udp-services-config-map.yaml
   - all.yaml
