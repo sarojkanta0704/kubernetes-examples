@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kie-server-showcase
+  labels:
+    app.kubernetes.io/name: kie-server-showcase
+    app.kubernetes.io/instance: kie-server-showcase
