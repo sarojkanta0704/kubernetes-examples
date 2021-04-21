@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: drools-workbench
+  labels:
+    app.kubernetes.io/name: drools-workbench
+    app.kubernetes.io/instance: drools-workbench

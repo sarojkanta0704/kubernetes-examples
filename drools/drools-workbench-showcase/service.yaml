@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: drools-workbench-showcase-svc
+  namespace: drools-workbench-showcase
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      name: http
+      targetPort: 8080
+  selector:
+    app: drools-workbench-showcase

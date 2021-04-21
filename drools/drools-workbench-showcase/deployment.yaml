@@ -1,0 +1,21 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: drools-workbench-showcase-dep
+  namespace: drools-workbench-showcase
+spec:
+  selector:
+    matchLabels:
+      app: drools-workbench-showcase
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: drools-workbench-showcase
+    spec:
+      containers:
+        - name: drools-workbench-showcase
+          image: drools-workbench-showcase-image
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080

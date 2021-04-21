@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: drools-workbench-showcase-ing
+  namespace: drools-workbench-showcase
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: drools-workbench-showcase.amoylabs.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: drools-workbench-showcase-svc
+              servicePort: 8080
