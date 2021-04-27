@@ -5,7 +5,7 @@ resources:
 - deployment.yaml
 - service.yaml
 - ingress.yaml
-namespace: drools-workbench-showcase
+namespace: drools
 images:
 - name: drools-workbench-showcase-image
   newName: jboss/drools-workbench-showcase

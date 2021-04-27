@@ -5,7 +5,7 @@ resources:
 - deployment.yaml
 - service.yaml
 - ingress.yaml
-namespace: kie-server-showcase
+namespace: drools
 images:
 - name: kie-server-showcase-image
   newName: jboss/kie-server-showcase

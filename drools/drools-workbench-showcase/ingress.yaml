@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: drools-workbench-showcase-ing
-  namespace: drools-workbench-showcase
+  namespace: drools
   annotations:
     kubernetes.io/ingress.class: "nginx"
 spec:

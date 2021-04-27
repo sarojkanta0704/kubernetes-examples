@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kie-server-showcase-svc
-  namespace: kie-server-showcase
+  namespace: drools
 spec:
   ports:
     - port: 8080

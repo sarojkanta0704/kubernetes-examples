@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: drools
+  labels:
+    app.kubernetes.io/name: drools
+    app.kubernetes.io/instance: drools
