@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hyperon-studio-ing
+  namespace: hyperon-studio
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: hyperon-studio.amoylabs.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: hyperon-studio-svc
+              servicePort: 8080
