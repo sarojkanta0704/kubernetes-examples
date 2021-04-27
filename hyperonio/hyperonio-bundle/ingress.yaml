@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hyperon-bundle-ing
+  namespace: hyperon-bundle
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: hyperon-bundle.amoylabs.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: hyperon-bundle-svc
+              servicePort: 8080

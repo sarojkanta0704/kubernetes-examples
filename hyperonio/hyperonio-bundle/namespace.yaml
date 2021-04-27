@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hyperon-bundle
+  labels:
+    app.kubernetes.io/name: hyperon-bundle
+    app.kubernetes.io/instance: hyperon-bundle
