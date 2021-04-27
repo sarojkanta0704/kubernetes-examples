@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- drools-workbench-showcase/deployment.yaml
+- drools-workbench-showcase/service.yaml
+- drools-workbench-showcase/ingress.yaml
+- kie-server-showcase/deployment.yaml
+- kie-server-showcase/service.yaml
+- kie-server-showcase/ingress.yaml
+namespace: drools
+images:
+- name: drools-workbench-showcase-image
+  newName: jboss/drools-workbench-showcase
+  newTag: latest
+- name: kie-server-showcase-image
+  newName: jboss/kie-server-showcase
+  newTag: latest
