@@ -20,7 +20,9 @@ spec:
           ports:
             - containerPort: 8080
           env:
+            - name: KIE_WB_PORT_8080_TCP
+              value: "tcp://drools-workbench-showcase-svc.drools:8080"
             - name: KIE_WB_PORT_8080_TCP_ADDR
-              value: "drools-workbench-showcase-svc"
+              value: "drools-workbench-showcase-svc.drools"
             - name: KIE_WB_ENV_KIE_CONTEXT_PATH
               value: "business-central"
