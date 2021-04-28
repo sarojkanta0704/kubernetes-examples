@@ -8,6 +8,6 @@ spec:
     - port: 8080
       protocol: TCP
       name: http
-      targetPort: e8080
+      targetPort: 38080
   selector:
     app: hyperon-bundle
