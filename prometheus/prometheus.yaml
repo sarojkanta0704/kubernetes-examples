@@ -83,4 +83,4 @@ scrape_configs:
     # metrics_path defaults to '/metrics'
     # scheme defaults to 'http'.
     static_configs:
-      - targets: ['kube-state-metrics.ops-monit:8080']
+      - targets: ['kube-state-metrics:8080']
