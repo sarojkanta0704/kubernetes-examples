@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: kube-state-metrics
     app.kubernetes.io/version: v1.9.7
   name: kube-state-metrics
-  namespace: ops-monit
+  namespace: kube-ops
 spec:
   clusterIP: None
   ports:
