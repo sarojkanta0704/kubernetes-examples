@@ -78,3 +78,9 @@ scrape_configs:
       target_label: container
       replacement: $1
       action: replace
+
+  - job_name: 'kube-state-metrics'
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+    static_configs:
+      - targets: ['kube-state-metrics.ops-monit:8080']
