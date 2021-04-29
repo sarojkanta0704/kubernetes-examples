@@ -19,3 +19,10 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - name: drools-workbench-showcase-persistent-storage
+              mountPath: /opt/jboss/wildfly/bin/.niogit
+      volumes:
+      - name: drools-workbench-showcase-persistent-storage
+        persistentVolumeClaim:
+          claimName: drools-workbench-showcase-pvc
