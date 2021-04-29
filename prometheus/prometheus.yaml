@@ -26,14 +26,10 @@ scrape_configs:
     # scheme defaults to 'http'.
     static_configs:
       - targets: ['localhost:9090']
-        labels:
-          group: 'prometheus'
 
-  - job_name: 'k8s'
+  - job_name: 'k8s-node-exporter'
     static_configs:
       - targets: ['192.168.2.120:9100', '192.168.2.130:9100', '192.168.2.131:9100', '192.168.2.132:9100', '192.168.2.133:9100', '192.168.2.134:9100']
-        labels:
-          group: 'k8s'
 
   - job_name: 'grafana'
     scheme: 'https'
@@ -41,35 +37,6 @@ scrape_configs:
       insecure_skip_verify: true
     static_configs:
       - targets: ['grafana.amoylabs.com:8443']
-        labels:
-          group: 'grafana'
-
-  - job_name: 'ingress-nginx-endpoints'
-    kubernetes_sd_configs:
-    - role: pod
-      namespaces:
-        names:
-        - ingress-nginx
-    relabel_configs:
-    - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
-      action: keep
-      regex: true
-    - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scheme]
-      action: replace
-      target_label: __scheme__
-      regex: (https?)
-    - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
-      action: replace
-      target_label: __metrics_path__
-      regex: (.+)
-    - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
-      action: replace
-      target_label: __address__
-      regex: ([^:]+)(?::\d+)?;(\d+)
-      replacement: $1:$2
-    - source_labels: [__meta_kubernetes_service_name]
-      regex: prometheus-server
-      action: drop
 
   - job_name: 'www.amoylabs.com'
     scheme: 'https'
@@ -78,8 +45,6 @@ scrape_configs:
       insecure_skip_verify: true
     static_configs:
       - targets: ['www.amoylabs.com:8443']
-        labels:
-          group: 'spring-boot'
 
   - job_name: 'backoffice.amoylabs.com'
     scheme: 'https'
@@ -88,22 +53,12 @@ scrape_configs:
       insecure_skip_verify: true
     static_configs:
       - targets: ['backoffice.amoylabs.com:8443']
-        labels:
-          group: 'spring-boot'
 
   - job_name: 'k8s-cadvisor'
     metrics_path: /metrics/cadvisor
-    kubernetes_sd_configs:
-    - role: node
-    relabel_configs:
-    - source_labels: [__address__]
-      regex: '(.*):10250'
-      replacement: '${1}:10255'
-      target_label: __address__
-      action: replace
-    - action: labelmap
-      regex: __meta_kubernetes_node_label_(.+)
-
+    scheme: 'http'
+    static_configs:
+      - targets: ['192.168.2.120:10255', '192.168.2.130:10255', '192.168.2.131:10255', '192.168.2.132:10255', '192.168.2.133:10255', '192.168.2.134:10255']
     metric_relabel_configs:
     - source_labels: [instance]
       separator: ;
@@ -111,7 +66,6 @@ scrape_configs:
       target_label: node
       replacement: $1
       action: replace
-
     - source_labels: [pod_name]
       separator: ;
       regex: (.+)
@@ -124,23 +78,3 @@ scrape_configs:
       target_label: container
       replacement: $1
       action: replace
-
-  - job_name: kube-state-metrics
-    kubernetes_sd_configs:
-    - role: endpoints
-      namespaces:
-        names:
-        - ops-monit
-    relabel_configs:
-    - source_labels: [__meta_kubernetes_service_label_app_kubernetes_io_name]
-      regex: kube-state-metrics
-      replacement: $1
-      action: keep
-    - action: labelmap
-      regex: __meta_kubernetes_service_label_(.+)
-    - source_labels: [__meta_kubernetes_namespace]
-      action: replace
-      target_label: k8s_namespace
-    - source_labels: [__meta_kubernetes_service_name]
-      action: replace
-      target_label: k8s_sname
