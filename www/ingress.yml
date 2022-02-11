@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: www-ing
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: www.amoylabs.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: www-svc
+            port: 
+              number: 80
