@@ -1,3 +1,4 @@
 resources:
   - default-tls.secret.yaml
+  - default-http-backend.yaml
   - all.yaml

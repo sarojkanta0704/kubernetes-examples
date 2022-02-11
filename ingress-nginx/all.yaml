@@ -324,6 +324,7 @@ subjects:
 apiVersion: v1
 data:
   allow-snippet-annotations: "true"
+  custom-http-errors: "404,500,503"  
 kind: ConfigMap
 metadata:
   labels:
