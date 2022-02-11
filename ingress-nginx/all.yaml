@@ -357,11 +357,13 @@ spec:
   - appProtocol: http
     name: http
     port: 80
+    nodePort: 30080
     protocol: TCP
     targetPort: http
   - appProtocol: https
     name: https
     port: 443
+    nodePort: 30443
     protocol: TCP
     targetPort: https
   selector:
@@ -430,6 +432,7 @@ spec:
         - --validating-webhook=:8443
         - --validating-webhook-certificate=/usr/local/certificates/cert
         - --validating-webhook-key=/usr/local/certificates/key
+        - --default-ssl-certificate=ingress-nginx/ingress-nginx-default-tls
         env:
         - name: POD_NAME
           valueFrom:
@@ -498,6 +501,12 @@ spec:
       dnsPolicy: ClusterFirst
       nodeSelector:
         kubernetes.io/os: linux
+        node-role.kubernetes.io/ingress: ''
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/ingress
+          value: ''
+          operator: Equal
       serviceAccountName: ingress-nginx
       terminationGracePeriodSeconds: 300
       volumes:
@@ -550,6 +559,12 @@ spec:
           allowPrivilegeEscalation: false
       nodeSelector:
         kubernetes.io/os: linux
+        node-role.kubernetes.io/ingress: ''
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/ingress
+          value: ''
+          operator: Equal
       restartPolicy: OnFailure
       securityContext:
         runAsNonRoot: true
@@ -603,6 +618,12 @@ spec:
           allowPrivilegeEscalation: false
       nodeSelector:
         kubernetes.io/os: linux
+        node-role.kubernetes.io/ingress: ''
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/ingress
+          value: ''
+          operator: Equal
       restartPolicy: OnFailure
       securityContext:
         runAsNonRoot: true
