@@ -126,7 +126,7 @@ externalURL: https://harbor.amoylabs.com:30443
 # in each components tls cert files need to provided in advance.
 internalTLS:
   # If internal TLS enabled
-  enabled: false
+  enabled: true
   # There are three ways to provide tls
   # 1) "auto" will generate cert automatically
   # 2) "manual" need provide cert file manually in following value
@@ -186,7 +186,7 @@ internalTLS:
 ipFamily:
   # ipv6Enabled set to true if ipv6 is enabled in cluster, currently it affected the nginx related component
   ipv6:
-    enabled: true
+    enabled: false
   # ipv4Enabled set to true if ipv4 is enabled in cluster, currently it affected the nginx related component
   ipv4:
     enabled: true
