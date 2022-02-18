@@ -209,47 +209,47 @@ persistence:
     registry:
       # Use the existing PVC which must be created manually before bound,
       # and specify the "subPath" if the PVC is shared with other components
-      existingClaim: ""
+      existingClaim: "harbor"
       # Specify the "storageClass" used to provision the volume. Or the default
       # StorageClass will be used(the default).
       # Set it to "-" to disable dynamic provisioning
-      storageClass: "nfs-storage"
-      subPath: "harbor"
-      accessMode: ReadWriteOnce
+      storageClass: "-"
+      subPath: ""
+      accessMode: ReadWriteMany
       size: 5Gi
     chartmuseum:
-      existingClaim: ""
-      storageClass: "nfs-storage"
-      subPath: "harbor"
-      accessMode: ReadWriteOnce
+      existingClaim: "harbor"
+      storageClass: "-"
+      subPath: ""
+      accessMode: ReadWriteMany
       size: 5Gi
     jobservice:
-      existingClaim: ""
-      storageClass: "nfs-storage"
-      subPath: "harbor"
-      accessMode: ReadWriteOnce
+      existingClaim: "harbor"
+      storageClass: "-"
+      subPath: ""
+      accessMode: ReadWriteMany
       size: 1Gi
     # If external database is used, the following settings for database will
     # be ignored
     database:
-      existingClaim: ""
-      storageClass: "nfs-storage"
-      subPath: "harbor"
-      accessMode: ReadWriteOnce
+      existingClaim: "harbor"
+      storageClass: "-"
+      subPath: ""
+      accessMode: ReadWriteMany
       size: 1Gi
     # If external Redis is used, the following settings for Redis will
     # be ignored
     redis:
-      existingClaim: ""
-      storageClass: "nfs-storage"
-      subPath: "harbor"
-      accessMode: ReadWriteOnce
+      existingClaim: "harbor"
+      storageClass: "-"
+      subPath: ""
+      accessMode: ReadWriteMany
       size: 1Gi
     trivy:
-      existingClaim: ""
-      storageClass: "nfs-storage"
-      subPath: "harbor"
-      accessMode: ReadWriteOnce
+      existingClaim: "harbor"
+      storageClass: "-"
+      subPath: ""
+      accessMode: ReadWriteMany
       size: 5Gi
   # Define which storage backend is used for registry and chartmuseum to store
   # images and charts. Refer to
