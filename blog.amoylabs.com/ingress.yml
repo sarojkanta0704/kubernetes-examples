@@ -1,17 +1,17 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: www-ing
+  name: blog 
 spec:
   ingressClassName: nginx
   rules:
-  - host: www.amoylabs.com
+  - host: blog.amoylabs.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: www-svc
+            name: blog 
             port: 
-              number: 80
+              number: 8080
