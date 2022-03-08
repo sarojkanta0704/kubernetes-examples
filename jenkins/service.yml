@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: jenkins-svc
+  name: jenkins
+  namespace: jenkins
 spec:
   ports:
   - port: 8080
     protocol: TCP
     name: http
   selector:
-    app: jenkins-app
+    app: jenkins

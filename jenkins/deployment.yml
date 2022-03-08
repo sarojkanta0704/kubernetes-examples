@@ -1,20 +1,21 @@
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: jenkins-dep 
+  name: jenkins
+  namespace: jenkins
 spec:
   selector:
     matchLabels:
-      app: jenkins-app
+      app: jenkins
   replicas: 1 # tells deployment to run 2 pods matching the template
   template:
     metadata:
       labels:
-        app: jenkins-app
+        app: jenkins
     spec:
       containers:
       - name: jenkins
-        image: jenkins/jenkins:lts
+        image: jenkins/jenkins:lts-jdk11
         ports:
         - containerPort: 8080
         volumeMounts:
@@ -23,4 +24,4 @@ spec:
       volumes:
       - name: jenkins-persistent-storage
         persistentVolumeClaim:
-          claimName: jenkins-pv-claim
+          claimName: jenkins
