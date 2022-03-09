@@ -5,8 +5,11 @@ metadata:
   namespace: jenkins
 spec:
   ports:
-  - port: 8080
-    protocol: TCP
-    name: http
+  - name: httpport
+    port: 8080
+    targetPort: 8080
+  - name: jnlpport
+    port: 50000    
+    targetPort: 50000
   selector:
     app: jenkins
