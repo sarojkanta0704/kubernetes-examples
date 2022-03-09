@@ -1,0 +1,4 @@
+resources:
+  - recommended.yaml
+  - ingress.yaml
+  - user.yaml
