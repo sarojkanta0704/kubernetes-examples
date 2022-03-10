@@ -38,6 +38,9 @@ spec:
       labels:
         app: docker-registry
     spec:
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 1000
       containers:
       - name: docker-registry
         image: registry:2          
@@ -46,7 +49,7 @@ spec:
         - containerPort: 5000
         volumeMounts:
         - name: docker-registry-volumes
-          mountPath: /opt/registry
+          mountPath: /var/lib/registry
       volumes:
       - name: docker-registry-volumes
         persistentVolumeClaim:
@@ -71,7 +74,8 @@ metadata:
   name: docker-registry
   namespace: docker-registry
   annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   ingressClassName: nginx
   rules:
