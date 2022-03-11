@@ -45,8 +45,14 @@ spec:
       - name: docker-registry
         image: registry:2          
         imagePullPolicy: IfNotPresent
+        env:
+          - name: REGISTRY_HTTP_ADDR
+            value: ":5000"
+          - name: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY
+            value: "/var/lib/registry"        
         ports:
-        - containerPort: 5000
+        - name: http
+          containerPort: 5000
         volumeMounts:
         - name: docker-registry-volumes
           mountPath: /var/lib/registry
@@ -62,7 +68,7 @@ metadata:
   namespace: docker-registry
 spec:
   ports:
-  - name: httpport
+  - name: http
     port: 5000
     targetPort: 5000
   selector:
@@ -76,6 +82,10 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Forwarded-Proto: https";
 spec:
   ingressClassName: nginx
   rules:
@@ -87,5 +97,5 @@ spec:
         backend:
           service:
             name: docker-registry
-            port: 
+            port:
               number: 5000
