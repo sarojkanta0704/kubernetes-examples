@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: harbor
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  namespace: harbor
+  name: harbor
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "nfs-storage"
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
