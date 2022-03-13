@@ -10,7 +10,7 @@ expose:
     # is disabled, the port must be included in the command when pull/push
     # images. Refer to https://github.com/goharbor/harbor/issues/5291
     # for the detail.
-    enabled: true
+    enabled: false
     # The source of the tls certificate. Set it as "auto", "secret"
     # or "none" and fill the information in the corresponding section
     # 1) auto: generate the tls certificate automatically
@@ -52,6 +52,8 @@ expose:
       ingress.kubernetes.io/proxy-body-size: "0"
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
       nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        more_set_headers "X-Forwarded-Proto: https";
     notary:
       # notary-specific annotations
       annotations: {}
@@ -126,7 +128,7 @@ externalURL: https://harbor.amoylabs.com:30443
 # in each components tls cert files need to provided in advance.
 internalTLS:
   # If internal TLS enabled
-  enabled: true
+  enabled: false
   # There are three ways to provide tls
   # 1) "auto" will generate cert automatically
   # 2) "manual" need provide cert file manually in following value
@@ -553,7 +555,7 @@ registry:
       privateKeySecret: "my-secret"
 
 chartmuseum:
-  enabled: true
+  enabled: false
   # set the service account to be used, default if left empty
   serviceAccountName: ""
   # mount the service account token
@@ -580,7 +582,7 @@ chartmuseum:
 
 trivy:
   # enabled the flag to enable Trivy scanner
-  enabled: true
+  enabled: false
   image:
     # repository the repository for Trivy adapter image
     repository: goharbor/trivy-adapter-photon
@@ -642,7 +644,7 @@ trivy:
   priorityClassName:
 
 notary:
-  enabled: true
+  enabled: false
   server:
     # set the service account to be used, default if left empty
     serviceAccountName: ""
