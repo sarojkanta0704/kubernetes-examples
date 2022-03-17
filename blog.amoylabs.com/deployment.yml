@@ -16,4 +16,5 @@ spec:
       - name: app 
         image: docker.amoylabs.com:30500/blog:63
         ports:
-        - containerPort: 8080
+        - name: http
+          containerPort: 28080
