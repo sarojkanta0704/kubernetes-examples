@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: app 
-        image: xmniko/blog.amoylabs.com:v0.0.2
+        image: docker.amoylabs.com:30500/blog:63
         ports:
         - containerPort: 8080

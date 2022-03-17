@@ -2,18 +2,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  labels:
-    app.kubernetes.io/instance: docker-registry
-    app.kubernetes.io/name: docker-registry
-  name: docker-registry
+  name: docker
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: docker-registry
-  namespace: docker-registry
-  labels:
-    app: docker-registry
+  name: registry
+  namespace: docker
   annotations:
     volume.beta.kubernetes.io/storage-class: "nfs-storage"
 spec:
@@ -26,24 +21,24 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: docker-registry
-  namespace: docker-registry
+  name: registry
+  namespace: docker
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: docker-registry
+      app: registry
   template:
     metadata:
       labels:
-        app: docker-registry
+        app: registry
     spec:
       securityContext:
         fsGroup: 1000
         runAsUser: 1000
       containers:
-      - name: docker-registry
-        image: registry:2          
+      - name: registry
+        image: registry
         imagePullPolicy: IfNotPresent
         env:
           - name: REGISTRY_HTTP_ADDR
@@ -56,46 +51,31 @@ spec:
         volumeMounts:
         - name: docker-registry-volumes
           mountPath: /var/lib/registry
+      nodeSelector:
+        kubernetes.io/os: linux
+        node-role.kubernetes.io/ingress: ''
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/ingress
+          value: ''
+          operator: Equal
       volumes:
       - name: docker-registry-volumes
         persistentVolumeClaim:
-          claimName: docker-registry
+          claimName: registry
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: docker-registry
-  namespace: docker-registry
+  name: registry
+  namespace: docker
 spec:
   ports:
   - name: http
+    protocol: TCP
     port: 5000
     targetPort: 5000
+    nodePort: 30500
   selector:
-    app: docker-registry
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: docker-registry
-  namespace: docker-registry
-  annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: "0"
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      more_set_headers "X-Forwarded-Proto: https";
-spec:
-  ingressClassName: nginx
-  rules:
-  - host: docker.amoylabs.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: docker-registry
-            port:
-              number: 5000
+    app: registry
+  type: NodePort
