@@ -1,0 +1,123 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pgadmin-pv-claim
+  labels:
+    app: pgadmin
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "nfs-storage"
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: pgadmin
+data:
+  pgadmin-password: U3VwZXJTZWNyZXQ=
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgadmin-config
+data:
+  servers.json: |
+    {
+       "Servers": {
+         "1": {
+           "Name": "PostgreSQL DB",
+           "Group": "Servers",
+           "Port": 5432,
+           "Username": "admin",
+           "Host": "postgres.postgres",
+           "SSLMode": "prefer",
+           "MaintenanceDB": "postgresdb"
+         }
+       }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgadmin
+  labels:
+    app: pgadmin
+spec:
+  selector:
+    matchLabels:
+      app: pgadmin
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pgadmin
+    spec:    
+      containers:
+       - name: pgadmin
+         image: dpage/pgadmin4
+         imagePullPolicy: Always
+         env:
+         - name: PGADMIN_DEFAULT_EMAIL
+           value: admin@amoylabs.com
+         - name: PGADMIN_DEFAULT_PASSWORD
+           valueFrom:
+             secretKeyRef:
+               name: pgadmin
+               key: pgadmin-password
+         ports:
+         - name: http
+           containerPort: 80
+           protocol: TCP
+         volumeMounts:
+         - name: pgadmin-config
+           mountPath: /pgadmin4/servers.json
+           subPath: servers.json
+           readOnly: true
+         - name: pgadmin-storage
+           mountPath: /var/lib/pgadmin
+      volumes:
+      - name: pgadmin-config
+        configMap:
+          name: pgadmin-config
+      - name: pgadmin-storage
+        persistentVolumeClaim:
+          claimName: pgadmin-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgadmin
+  labels:
+    app: pgadmin
+spec:
+  ports:
+  - name: pgadminport
+    port: 80
+    targetPort: 80
+  selector:
+    app: pgadmin
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pgadmin
+  labels:
+    app: pgadmin
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: pgadmin.amoylabs.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: pgadmin
+            port: 
+              number: 80
