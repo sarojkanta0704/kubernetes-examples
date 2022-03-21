@@ -3,6 +3,12 @@ kind: Ingress
 metadata:
   name: jenkins
   namespace: jenkins
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      if ($request_uri ~* "/blue(/.*)") {
+        proxy_pass http://upstream_balancer/blue$1; 
+        break;
+      }
 spec:
   ingressClassName: nginx
   rules:
