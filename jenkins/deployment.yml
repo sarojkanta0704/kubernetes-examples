@@ -8,6 +8,7 @@ spec:
     matchLabels:
       app: jenkins
   replicas: 1 # tells deployment to run 2 pods matching the template
+  revisionHistoryLimit: 0
   template:
     metadata:
       labels:
