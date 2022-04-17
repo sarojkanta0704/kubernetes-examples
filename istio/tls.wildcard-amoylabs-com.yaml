@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: wildcard-amoylabs-com
+  name: tls-wildcard-amoylabs-com
   namespace: istio-system 
 type: kubernetes.io/tls
 data:

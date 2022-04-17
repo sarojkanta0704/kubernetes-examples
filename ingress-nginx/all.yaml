@@ -432,6 +432,7 @@ spec:
         - --validating-webhook-certificate=/usr/local/certificates/cert
         - --validating-webhook-key=/usr/local/certificates/key
         - --default-ssl-certificate=ingress-nginx/ingress-nginx-default-tls
+        - --enable-ssl-passthrough
         env:
         - name: POD_NAME
           valueFrom:
