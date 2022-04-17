@@ -1,0 +1,3 @@
+resources:
+  - tls.wildcard-amoylabs-com.yaml
+  - tls.wildcard-outstanding-blog.yaml
