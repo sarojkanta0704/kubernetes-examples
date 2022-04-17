@@ -1,4 +1,4 @@
 resources:
-  - default-tls.secret.yaml
-  - default-http-backend.yaml
+  - tls.wildcard-amoylabs-com.yaml
+  - tls.secret-outstanding-blog.yaml
   - all.yaml
