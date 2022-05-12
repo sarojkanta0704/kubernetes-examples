@@ -20,7 +20,7 @@ spec:
         runAsUser: 1000    
       containers:
       - name: jenkins
-        image: jenkins/jenkins:2.339
+        image: jenkins/jenkins:2.347
         ports:
         - name: httpport
           containerPort: 8080
