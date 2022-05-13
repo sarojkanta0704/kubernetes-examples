@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: registry-ui
-          image: "joxit/docker-registry-ui:latest"
+          image: "joxit/docker-registry-ui:2.2.0"
           imagePullPolicy: IfNotPresent
           env:
             - name: REGISTRY_TITLE
