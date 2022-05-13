@@ -11,20 +11,16 @@ metadata:
   namespace: registry-ui
   labels:
     app: registry-ui
-    release: registry-ui
-    app/version: "2.0.0"
 spec:
   replicas: 1
   revisionHistoryLimit: 0
   selector:
     matchLabels:
       app: registry-ui
-      release: registry-ui
   template:
     metadata:
       labels:
         app: registry-ui
-        release: registry-ui
     spec:
       containers:
         - name: registry-ui
@@ -63,8 +59,6 @@ metadata:
   namespace: registry-ui
   labels:
     app: registry-ui
-    release: registry-ui
-    app/version: "2.0.0"
 spec:
   ports:
     - port: 80
@@ -73,7 +67,6 @@ spec:
       name: http
   selector:
       app: registry-ui
-      release: registry-ui
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
