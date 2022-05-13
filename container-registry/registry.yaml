@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: docker
+  name: registry
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: registry
-  namespace: docker
+  namespace: registry
   annotations:
     volume.beta.kubernetes.io/storage-class: "nfs-storage"
 spec:
@@ -22,7 +22,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: registry
-  namespace: docker
+  namespace: registry
 spec:
   replicas: 1
   selector:
@@ -51,7 +51,7 @@ spec:
         - name: http
           containerPort: 5000
         volumeMounts:
-        - name: docker-registry-volumes
+        - name: registry-volumes
           mountPath: /var/lib/registry
       nodeSelector:
         kubernetes.io/os: linux
@@ -62,7 +62,7 @@ spec:
           value: ''
           operator: Equal
       volumes:
-      - name: docker-registry-volumes
+      - name: registry-volumes
         persistentVolumeClaim:
           claimName: registry
 ---
@@ -70,7 +70,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: registry
-  namespace: docker
+  namespace: registry
 spec:
   ports:
   - name: http
