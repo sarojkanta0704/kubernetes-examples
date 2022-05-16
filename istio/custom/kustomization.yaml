@@ -1,0 +1,7 @@
+resources:
+  - addons/prometheus.yaml
+  - addons/grafana.yaml
+  - addons/jaeger.yaml
+  - addons/kiali.yaml
+  - addons/extras/prometheus-operator.yaml
+  - ingress.yaml
