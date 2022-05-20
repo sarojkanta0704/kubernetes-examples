@@ -1,0 +1,1 @@
+Reference: https://github.com/argoproj/argo-cd/blob/master/manifests/install.yaml
