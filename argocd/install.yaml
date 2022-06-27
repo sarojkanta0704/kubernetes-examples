@@ -4545,6 +4545,31 @@ spec:
                                     - owner
                                     - repo
                                     type: object
+                                  gitlab:
+                                    properties:
+                                      api:
+                                        type: string
+                                      labels:
+                                        items:
+                                          type: string
+                                        type: array
+                                      project:
+                                        type: string
+                                      pullRequestState:
+                                        type: string
+                                      tokenRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                    required:
+                                    - project
+                                    type: object
                                   requeueAfterSeconds:
                                     format: int64
                                     type: integer
@@ -4806,6 +4831,31 @@ spec:
                                 type: object
                               scmProvider:
                                 properties:
+                                  azureDevOps:
+                                    properties:
+                                      accessTokenRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                      allBranches:
+                                        type: boolean
+                                      api:
+                                        type: string
+                                      organization:
+                                        type: string
+                                      teamProject:
+                                        type: string
+                                    required:
+                                    - accessTokenRef
+                                    - organization
+                                    - teamProject
+                                    type: object
                                   bitbucket:
                                     properties:
                                       allBranches:
@@ -6698,6 +6748,31 @@ spec:
                                     - owner
                                     - repo
                                     type: object
+                                  gitlab:
+                                    properties:
+                                      api:
+                                        type: string
+                                      labels:
+                                        items:
+                                          type: string
+                                        type: array
+                                      project:
+                                        type: string
+                                      pullRequestState:
+                                        type: string
+                                      tokenRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                    required:
+                                    - project
+                                    type: object
                                   requeueAfterSeconds:
                                     format: int64
                                     type: integer
@@ -6959,6 +7034,31 @@ spec:
                                 type: object
                               scmProvider:
                                 properties:
+                                  azureDevOps:
+                                    properties:
+                                      accessTokenRef:
+                                        properties:
+                                          key:
+                                            type: string
+                                          secretName:
+                                            type: string
+                                        required:
+                                        - key
+                                        - secretName
+                                        type: object
+                                      allBranches:
+                                        type: boolean
+                                      api:
+                                        type: string
+                                      organization:
+                                        type: string
+                                      teamProject:
+                                        type: string
+                                    required:
+                                    - accessTokenRef
+                                    - organization
+                                    - teamProject
+                                    type: object
                                   bitbucket:
                                     properties:
                                       allBranches:
@@ -7716,6 +7816,31 @@ spec:
                           - owner
                           - repo
                           type: object
+                        gitlab:
+                          properties:
+                            api:
+                              type: string
+                            labels:
+                              items:
+                                type: string
+                              type: array
+                            project:
+                              type: string
+                            pullRequestState:
+                              type: string
+                            tokenRef:
+                              properties:
+                                key:
+                                  type: string
+                                secretName:
+                                  type: string
+                              required:
+                              - key
+                              - secretName
+                              type: object
+                          required:
+                          - project
+                          type: object
                         requeueAfterSeconds:
                           format: int64
                           type: integer
@@ -7977,6 +8102,31 @@ spec:
                       type: object
                     scmProvider:
                       properties:
+                        azureDevOps:
+                          properties:
+                            accessTokenRef:
+                              properties:
+                                key:
+                                  type: string
+                                secretName:
+                                  type: string
+                              required:
+                              - key
+                              - secretName
+                              type: object
+                            allBranches:
+                              type: boolean
+                            api:
+                              type: string
+                            organization:
+                              type: string
+                            teamProject:
+                              type: string
+                          required:
+                          - accessTokenRef
+                          - organization
+                          - teamProject
+                          type: object
                         bitbucket:
                           properties:
                             allBranches:
@@ -9020,6 +9170,10 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
+  labels:
+    app.kubernetes.io/component: notifications-controller
+    app.kubernetes.io/name: argocd-notifications-controller
+    app.kubernetes.io/part-of: argocd
   name: argocd-notifications-controller
 ---
 apiVersion: v1
@@ -9692,7 +9846,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: quay.io/argoproj/argocd:v2.4.0
+        image: quay.io/argoproj/argocd:latest
         imagePullPolicy: Always
         name: argocd-applicationset-controller
         ports:
@@ -9789,7 +9943,7 @@ spec:
         - -n
         - /usr/local/bin/argocd
         - /shared/argocd-dex
-        image: quay.io/argoproj/argocd:v2.4.0
+        image: quay.io/argoproj/argocd:latest
         imagePullPolicy: Always
         name: copyutil
         securityContext:
@@ -9829,7 +9983,7 @@ spec:
       containers:
       - command:
         - argocd-notifications
-        image: quay.io/argoproj/argocd:v2.4.0
+        image: quay.io/argoproj/argocd:latest
         imagePullPolicy: Always
         livenessProbe:
           tcpSocket:
@@ -10036,13 +10190,19 @@ spec:
               key: otlp.address
               name: argocd-cmd-params-cm
               optional: true
+        - name: ARGOCD_REPO_SERVER_MAX_COMBINED_DIRECTORY_MANIFESTS_SIZE
+          valueFrom:
+            configMapKeyRef:
+              key: reposerver.max.combined.directory.manifests.size
+              name: argocd-cmd-params-cm
+              optional: true
         - name: HELM_CACHE_HOME
           value: /helm-working-dir
         - name: HELM_CONFIG_HOME
           value: /helm-working-dir
         - name: HELM_DATA_HOME
           value: /helm-working-dir
-        image: quay.io/argoproj/argocd:v2.4.0
+        image: quay.io/argoproj/argocd:latest
         imagePullPolicy: Always
         livenessProbe:
           failureThreshold: 3
@@ -10091,7 +10251,7 @@ spec:
         - -n
         - /usr/local/bin/argocd
         - /var/run/argocd/argocd-cmp-server
-        image: quay.io/argoproj/argocd:v2.4.0
+        image: quay.io/argoproj/argocd:latest
         name: copyutil
         securityContext:
           allowPrivilegeEscalation: false
@@ -10335,7 +10495,7 @@ spec:
               key: otlp.address
               name: argocd-cmd-params-cm
               optional: true
-        image: quay.io/argoproj/argocd:v2.4.0
+        image: quay.io/argoproj/argocd:latest
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
@@ -10537,14 +10697,8 @@ spec:
               key: otlp.address
               name: argocd-cmd-params-cm
               optional: true
-        image: quay.io/argoproj/argocd:v2.4.0
+        image: quay.io/argoproj/argocd:latest
         imagePullPolicy: Always
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: 8082
-          initialDelaySeconds: 5
-          periodSeconds: 10
         name: argocd-application-controller
         ports:
         - containerPort: 8082
